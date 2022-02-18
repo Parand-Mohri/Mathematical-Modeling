@@ -19,10 +19,12 @@ if exercise == 2
     plot(x,y)
     hold on 
 end
+
 if exercise == 3
     trajectory = [x;y];
-    plotTrajectory(trajectory, tail, 0.1    );
+    plotTrajectory(trajectory, tail    );
 end
+
 
 
 

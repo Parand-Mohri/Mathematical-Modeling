@@ -5,8 +5,8 @@ e1 = 0.04;
 e2 = 0.3;
 x = 1:10000;
 y = 1:10000;
-x(1) =  50;
-y(1) = 5;
+x(1) =  10;
+y(1) = 2;
 dt = 0.1;
 tail = 100;
 
@@ -20,11 +20,14 @@ if exercise == 2
     hold on 
 end
 if exercise == 3
-    trajectory = 2:1000
-    trajectory(1,:) =  x(:);
-    trajectory(2,:) = y(:);
-%     plotTrajectory(trajectory, tail);
+    trajectory = [x;y];
+    plotTrajectory(trajectory, tail    );
 end
+
+if exercise == 4
+
+end
+
 
 
 
