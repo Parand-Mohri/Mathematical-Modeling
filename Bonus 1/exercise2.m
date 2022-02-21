@@ -6,16 +6,15 @@ A = [0 1; -1/(L*C) -R/L];
 B = [1/L*C; 0];
 C = [1 0];
 D=0;
-u = zeros(1000,1);
-t = zeros(1000,1);
-for dt = 1:1000
-    t(dt) = dt/1000;%initializing time vector
-end
-u(:) = 50; % initializing input vector
+
+frequ = 50; % frequency 
+a = 1; % amplitude 
+input = @(t) a * sin(frequ * t); % input function
+t = (0:0.001:1); 
+u = input(t); 
+
 sys = ss(A,B,C,D); % exercise 2a
-lsim(sys,u, t) %exercise 2b
-
-
+y=lsim(sys,u, t); % exercise 2b
+plot(t,y)
 isstable(sys) % output is 1 so its stable - exercise 2c
-%     [A,B,C,D] = ssdata(sys)
 
