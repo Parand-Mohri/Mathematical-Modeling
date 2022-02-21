@@ -1,5 +1,5 @@
-a = [1 1 1/4];
-b = [1 0 1/4 0];
+a = [1 1 1/4]; % coefficient of nominator 
+b = [1 0 1/4 0]; % coefficient of denominator 
 [roots, polas , k ] = residue(a,b)
 
 % The partial fraction expansion found is: 
