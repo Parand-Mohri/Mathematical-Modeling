@@ -16,5 +16,9 @@ u = input(t);
 sys = ss(A,B,C,D); % exercise 2a
 y=lsim(sys,u, t); % exercise 2b
 plot(t,y)
-isstable(sys) % output is 1 so its stable - exercise 2c
+
+% exercise 2c:
+% all the eigenvalues of A are negative so its stable system 
+eig(A)
+
 
