@@ -9,5 +9,11 @@ x0 = 1;
 y0 = 2;
 
 % jocobian 
-A = jacobian([2*x - 3*x*y + y ^ 2, x + y + x*y - 5],[x,y])
-A * [x0; y0]
+J(x,y) = jacobian([2*x - 3*x*y + y ^ 2, x + y + x*y - 5],[x,y]);
+J(x0,y0)
+x1 = x0 + 0.0001;
+y1 = y0 + 0.0001;
+der =  J(x0,y0) * [x1;y1];
+derX1 = der(1);
+derY1 =  der(2);
+
