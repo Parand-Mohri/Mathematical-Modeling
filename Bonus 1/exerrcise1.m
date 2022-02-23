@@ -7,12 +7,12 @@ x0 = 1;
 y0 = 2;
 
 % jocobian 
-J(x,y) = jacobian([2*x - 3*x*y + y ^ 2, x + y + x*y - 5],[x,y])   
+J(x,y) = jacobian([2*x - 3*x*y + y ^ 2, x + y + x*y - 5],[x,y]);   
 % initial two points around x0 and y0 
 xHat = x - x0; 
 yHat = y - y0;
 % linearisation around (x0,y0)
-derHat =  J(x0,y0) * [xHat;yHat]
+derHat =  J(x0,y0) * [xHat;yHat];
 derXHat = derHat(1);
 derYHat =  derHat(2);
 
