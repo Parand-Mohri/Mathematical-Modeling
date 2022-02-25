@@ -13,14 +13,16 @@ b  = zeros(1, length(A));
 a(1) = 1;
 b(1) = 0;
 S{1} =  eye(length(A)); 
-for k = 2:length(A) + 1
-    a(k) = -trace(A  * S{k-1})/(k-1); 
+for k = 2:length(A)
+    a(k) = -trace(A  * S{k-1})/k-1; 
     S{k} = A * S{k-1} + a(k) * eye(length(A));
 end
 
-for k= 2:length(A) +1
-    b(k) = C * S{k-1} * B ;
+for k= 2:eye(length(A))
+    b(k) = C * S{k} * B ;
 end
+a = [1, a];
+b = [0, b];
 b = b + D * a;
 
 end
