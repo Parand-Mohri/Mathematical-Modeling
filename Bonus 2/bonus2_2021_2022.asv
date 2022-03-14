@@ -37,7 +37,7 @@ sys1  = tf(b_c,a_c, t);% Transfer function of combined system
 % first compute the frequency response
 omega=linspace(0,2*pi,1000); % frequencies in radians
 for c = 1:length(omega)
-    H2(c) = polyval(b_c, omega(c)) / polyval(a_c, omega(c));
+    H2(c) = polyval(b_c, omega(c)) ./ polyval(a_c, omega(c));
 end
 % H2 = freqz(b_c,a_c,omega); %frequency response
 % Plot the magnitude response (absolute value of the frequency response)
@@ -72,7 +72,7 @@ load ("data_MM_bonus2_challenge1.mat")
 % ﻿figure;
 subplot(3,1,1)
 % do some plotting
-plot(0:length(u)-1 , u)
+plot(0:length(u)/ , u)
 title ('Time domain input');
 xlabel('time (s)') % also make sure you actually have seconds that you show 
 subplot(3,1,2)
