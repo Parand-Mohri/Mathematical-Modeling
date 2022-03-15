@@ -88,15 +88,15 @@ xlabel('write the meaning and units here')
 subplot(3,1,3)
 plot(atan2(imag(fft(u)),real(fft(u)))*180/pi);
 title('Phase spectrum input');
-xlabel('write the meaning and units here')
-ylabel('write the meaning and units here')  
+xlabel('fz')
+ylabel('angle')  
 
 %% Challenge 1d
 figure;
 hold on
 plot((0:length(u)-1)*(fs/length(u)),abs(fft(u))); % magnitude spectrum input
 % find magnitude of tf and multiply but magnitude of input 
-plot((0:length(u)-1)*(fs/length(u)), abs(H2) .* abs(fft(u)));
+plot((0:length(data.u)-1)*(fs/length(data.u)), abs(H2) .* abs(fft(data.u)));
 hold off
 title('Magnitude spectrum');
 xlabel('write the meaning and units here')
@@ -109,7 +109,7 @@ C=[0 0 2]; % output matrix
 D=0; % direct feedthrough
 
 t=0:T:5-T; %create time vector
-u=linspace(-1,1,length(t))+sin(2*t); % sampled time series
+u1=linspace(-1,1,length(t))+sin(2*t); % sampled time series
 
 %% Challenge 2a
 M = [A ,B; zeros([1, length(A)+1])];
@@ -118,9 +118,9 @@ si = e(1:length(A), 1:length(A));
 phi = e(1: length(A),length(A)+1);
 %% Challenge 2b
 sysC = ss(A,B,C,D);
-sysD = ss(A,B,C,D,T);
-[yc,tc,xc] = lsim(sysC, u, t);
-[yd,td,xd] = lsim(sysD, u, t);
+sysD = ss(si,phi,C,D,T);
+[yc,tc,xc] = lsim(sysC, u1, t);
+[yd,td,xd] = lsim(sysD, u1, t);
 figure; 
 hold on
 
