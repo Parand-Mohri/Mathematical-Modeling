@@ -12,18 +12,24 @@ omega1 = 0.4 * pi;
 omega2 = 0.8 * pi;
 
 % first make notch filter for 60Hz powerline
-% ==> your code here
-z1 = [cos(omega1)+ 1i * sin(omega1) cos(-omega1) + 1i*sin(omega1) ];% zeros of notch filter 1
+% z1 = [cos(omega1)+ 1i * sin(omega1) cos(-omega1) + 1i*sin(omega1) ];% zeros of notch filter 1
+z1 = [exp(omega1*1i) exp(-omega1 * 1i)];
 p1 = 0.95 * z1;% poles notch filter 1
 b1 = poly(z1);% numerator polynomial notch filter 1
 a1 = poly(p1);% denominator polynomial notch filter 1
+sys2 = tf(b1, a1, t);
+figure;
+bode(sys2);
 
 % then make notch filter for 120Hz harmonic
-% ==> your code here
-z2 = [cos(omega2)+ 1i * sin(omega2) cos(-omega2) + 1i*sin(omega2) ];% zeros of notch filter 2
+% z2 = [cos(omega2)+ 1i * sin(omega2) cos(-omega2) + 1i*sin(omega2) ];% zeros of notch filter 2
+z2 = [exp(omega2 * 1i) exp(-omega2 * 1i)];
 p2 = 0.95 * z2;% poles notch filter 2
 b2 = poly(z2);% numerator polynomial notch filter 2
 a2 = poly(p2); % denominator polynomial notch filter 2
+sys3 = tf(b2,a2,t);
+figure;
+bode(sys3);
 
 % Finally combine the notch filters in a single transfer function
 z_c = [z1 z2];% zeros of combined transfer function
@@ -36,13 +42,15 @@ sys1  = tf(b_c,a_c, t);% Transfer function of combined system
 % Plot the magnitude response (bode magnitude plot)
 % first compute the frequency response
 omega=linspace(0,2*pi,1000); % frequencies in radians
+H2 = zeros(1,length(omega));%frequency response
 for c = 1:length(omega)
-    H2(c) = polyval(b_c, omega(c)) / polyval(a_c, omega(c));
+    H2(c) = polyval(b_c, omega(c)) ./ polyval(a_c, omega(c));
 end
 % H2 = freqz(b_c,a_c,omega); %frequency response
 % Plot the magnitude response (absolute value of the frequency response)
-% figure(4);
-plot(omega/2*pi,abs(H2));
+figure;
+% plot(omega/2*pi,abs(H2));
+bode(omega/2*pi,abs(H2));
 
 xlabel('frequency (Hz)');
 title('Magnitude response Task 2b')
@@ -58,21 +66,19 @@ hold on
 plot(linspace(-1.1,1.1,100),zeros(1,100),'k:');
 % plot imaginary axis
 plot(zeros(1,100),linspace(-1.1,1.1,100),'k:');
-plot(p_c, "x");
-plot(z_c,"o")
-% plot poles with an x
-% plot zeros with an o
+plot(p_c, "x");% plot poles with an x
+plot(z_c,"o");% plot zeros with an o
 xlabel('real axis')
 ylabel('imaginary axis')
 axis square
 title('Pole-zero plot Challenge 1b')
 
 %% Challenge 1c
-load ("data_MM_bonus2_challenge1.mat")
-% ﻿figure;
+load data_MM_bonus2_challenge1.mat
+figure;
 subplot(3,1,1)
 % do some plotting
-plot(0:length(u)-1 , u)
+plot((0:length(u)-1)*(fs/length(u)) , u);
 title ('Time domain input');
 xlabel('time (s)') % also make sure you actually have seconds that you show 
 subplot(3,1,2)
@@ -80,18 +86,18 @@ plot((0:length(u)-1)*(fs/length(u)),abs(fft(u))); % magnitude spectrum
 title('Magnitude spectrum input');
 xlabel('write the meaning and units here')
 subplot(3,1,3)
-% todo: add the phase spectum
+plot((0:length(u)-1)*(fs/length(u)),atan2(imag(H2),real(H2))*180/pi);
 title('Phase spectrum input');
 xlabel('write the meaning and units here')
-ylabel('write the meaning and units here')
+ylabel('write the meaning and units here')  
 
 %% Challenge 1d
 % ﻿figure;
-% plot((0:length(u)-1)*(fs/length(u)),abs(fft(u))); % magnitude spectrum input
-% hold on
-% % todo: magnitude spectrum output
-% title('Magnitude spectrum');
-% xlabel('write the meaning and units here')
+plot((0:length(u)-1)*(fs/length(u)),abs(fft(u))); % magnitude spectrum input
+% hold on ` 
+% todo: magnitude spectrum output
+title('Magnitude spectrum');
+xlabel('write the meaning and units here')
 
 %% Challenge 2
 % ﻿T=0.01; % sampling interval
