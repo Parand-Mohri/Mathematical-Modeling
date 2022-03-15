@@ -101,7 +101,7 @@ axis square
 title('Pole-zero plot Challenge 1b')
 
 
-%%Challenge 1c
+%% Challenge 1c
 
 data = load("data_MM_bonus2_challenge1.mat");
 figure;
@@ -127,7 +127,7 @@ title('Phase spectrum input');
 xlabel('frequency (Hz)')
 ylabel('angle')
 
-%%Challenge 1d
+%% Challenge 1d
 figure;
 % plot((0:length(u)-1)*(fs/length(u)),abs(fft(u))); % magnitude spectrum input
 % hold on

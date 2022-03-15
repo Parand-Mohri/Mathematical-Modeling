@@ -86,29 +86,46 @@ plot((0:length(u)-1)*(fs/length(u)),abs(fft(u))); % magnitude spectrum
 title('Magnitude spectrum input');
 xlabel('write the meaning and units here')
 subplot(3,1,3)
-plot((0:length(u)-1)*(fs/length(u)),atan2(imag(H2),real(H2))*180/pi);
+plot((0:length(u)-1)*(fs/length(u)),atan2(imag(fft(u)),real(fft(u)))*180/pi);
 title('Phase spectrum input');
 xlabel('write the meaning and units here')
 ylabel('write the meaning and units here')  
 
 %% Challenge 1d
-% ﻿figure;
+figure;
+
 plot((0:length(u)-1)*(fs/length(u)),abs(fft(u))); % magnitude spectrum input
-% hold on ` 
+hold on
+% find magnitude of tf and multiply but magnitude of input 
+%https://lpsa.swarthmore.edu/Bode/BodeWhat.html#:~:text=To%20find%20the%20magnitude%20of,the%20transfer%20function%20(%CE%B8).
+% bode(sys1, u);
+bode(sys1)
+hold off
 % todo: magnitude spectrum output
 title('Magnitude spectrum');
 xlabel('write the meaning and units here')
 
 %% Challenge 2
-% ﻿T=0.01; % sampling interval
-% A=[-1 2 -3;-2 0 -1;2 1 -1]; % System matrix
-% B=[1; 0; -2]; % input matrix
-% C=[0 0 2]; % output matrix
-% D=0; % direct feedthrough
-% 
-% t=0:T:5-T; %create time vector
-% u=linspace(-1,1,length(t))+sin(2*t); % sampled time series
+T = 0.01;% sampling interval
+A=[-1 2 -3;-2 0 -1;2 1 -1]; % System matrix
+B=[1; 0; -2]; % input matrix
+C=[0 0 2]; % output matrix
+D=0; % direct feedthrough
+
+t=0:T:5-T; %create time vector
+u=linspace(-1,1,length(t))+sin(2*t); % sampled time series
 
 %% Challenge 2a
+% M = zeros(length(A) + 1)
+M = [A ,B; zeros([1, length(A)+1])];
+% M = [A ; zeros([1, length(A)])]
 
+e = exp( M * T);
+si = e(1:length(A), 1:length(A));
+phi = e(1: length(A),length(A)+1);
 %% Challenge 2b
+sysC = ss(A,B,C,D);
+sysD = ss(A,B,C,D,T);
+% lsim(sysC, u, t)
+[yc,tc,xc] = lsim(sysC, u, t);
+[yd,td,xd] = lsim(sysC, u, t);
